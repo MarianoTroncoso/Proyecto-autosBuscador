@@ -138,12 +138,34 @@ function obtenerAutos(){
     ]
 };
 
-const autos = obtenerAutos();
+// es un objeto mas estatico, donde vamos a estar agregando 
+// valores conforme vayamos haciendo los cambios en el buscador
+let datosBusqueda = {
+    marca: '',
+    year: '',
+    minimo: '',
+    maximo: '',
+    puertas: '',
+    transmision: '',
+    color: ''
+}
 
+// event listener DOM loaded
+const autos = obtenerAutos();
 
 document.addEventListener('DOMContentLoaded', () =>{
     mostrarAutos(autos); 
 });
+
+// event litener para el formulario 
+const marca = document.querySelector('#marca');
+marca.addEventListener('input', e => {
+    // console.log(e.target.value);
+    datosBusqueda.marca = e.target.value;
+
+    // manda a llamar la funcion de filtrar autos
+    filtrarAuto()
+})
 
 function mostrarAutos(autos){
     // leer elemento resultado 
@@ -159,4 +181,7 @@ function mostrarAutos(autos){
     })
 }
 
+function filtrarAuto(){
+    console.log('desde filtrar auto')
+}
 
