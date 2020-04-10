@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     mostrarAutos(autos); 
 });
 
-// event litener para el formulario 
+// event listener para el formulario 
 const marca = document.querySelector('#marca');
 marca.addEventListener('input', e => {
     // console.log(e.target.value);
@@ -194,6 +194,32 @@ maximo.addEventListener('input', e => {
     filtrarAuto();
 });
 
+const puertas = document.querySelector('#puertas');
+puertas.addEventListener('input', e => {
+    // console.log(e.target.value);
+    datosBusqueda.puertas = Number(e.target.value);
+
+    // manda a llamar la funcion de filtrar autos
+    filtrarAuto();
+});
+
+const transmision = document.querySelector('#transmision');
+transmision.addEventListener('input', e => {
+    // console.log(e.target.value);
+    datosBusqueda.transmision = e.target.value;
+
+    // manda a llamar la funcion de filtrar autos
+    filtrarAuto();
+});
+
+const color = document.querySelector('#color');
+color.addEventListener('input', e => {
+    // console.log(e.target.value);
+    datosBusqueda.color = e.target.value;
+
+    // manda a llamar la funcion de filtrar autos
+    filtrarAuto();
+});
 
 function mostrarAutos(autos){
     // leer elemento resultado 
@@ -217,7 +243,8 @@ function mostrarAutos(autos){
 
 function filtrarAuto(){
     const resultado = obtenerAutos().filter(filtrarMarca)
-    .filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo);
+    .filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo)
+    .filter(filtrarPuertas).filter(filtrarTransmision).filter(filtrarColor);
 
     // console.log(resultado)
     if(resultado.length){
@@ -260,7 +287,37 @@ function filtrarMaximo(auto){
     }else{
         return auto;
     }
+};
+
+function filtrarPuertas(auto){
+
+    if(datosBusqueda.puertas){
+        return auto.puertas === datosBusqueda.puertas
+    }else{
+        return auto;
+    }
+};
+
+function filtrarTransmision(auto){
+
+    if(datosBusqueda.transmision){
+        return auto.transmision === datosBusqueda.transmision
+    }else{
+        return auto;
+    }
+};
+
+function filtrarColor(auto){
+
+    if(datosBusqueda.color){
+        return auto.color === datosBusqueda.color
+    }else{
+        return auto;
+    }
 }
+
+
+
 
 
 
