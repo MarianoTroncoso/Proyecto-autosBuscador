@@ -165,16 +165,31 @@ marca.addEventListener('input', e => {
 
     // manda a llamar la funcion de filtrar autos
     filtrarAuto();
-})
+});
+
+const year = document.querySelector('#year');
+year.addEventListener('input', e => {
+    // console.log(e.target.value);
+    datosBusqueda.year = Number(e.target.value);
+
+    // manda a llamar la funcion de filtrar autos
+    filtrarAuto();
+});
 
 function mostrarAutos(autos){
     // leer elemento resultado 
     const contenedor = document.querySelector('#resultado');
 
+    // limpiar resultados anteriores
+    while(contenedor.firstChild){
+        contenedor.removeChild(contenedor.firstChild);
+    }
+
+    // Construir el html de los autos 
     autos.forEach(auto => {
         const autoHTML = document.createElement('p');
         autoHTML.innerHTML = `
-            <p> ${auto.marca} - ${auto.modelo} - ${auto.yead} - ${auto.puertas} Puertas -
+            <p> ${auto.marca} - ${auto.modelo} - ${auto.year} - ${auto.puertas} Puertas -
             Transmisión: ${auto.transmision} - Precio: $${auto.precio} - Color: ${auto.color}</p>
         `;
         contenedor.appendChild(autoHTML);
@@ -182,17 +197,30 @@ function mostrarAutos(autos){
 }
 
 function filtrarAuto(){
-    const resultado = obtenerAutos().filter(filtrarMarca);
+    const resultado = obtenerAutos().filter(filtrarMarca).filter(filtrarYear);
 
-    console.log(resultado)
+    // console.log(resultado)
+    if(resultado.length){
+        mostrarAutos(resultado)
+    } else{
+        alert('No hay resultados');
+    }
 };
 
 function filtrarMarca(auto){
     if(datosBusqueda.marca){
-        return auto.marca === datosBusqueda.marca
+        return auto.marca === datosBusqueda.marca;
     }else{
-
+        return auto;
     }
-
 }
+function filtrarYear(auto){
+
+    if(datosBusqueda.year){
+        return auto.year === datosBusqueda.year
+    }else{
+        return auto;
+    }
+}
+
 
